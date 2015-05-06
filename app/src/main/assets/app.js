@@ -64,7 +64,8 @@ x.attr('action','http://vinaphone.com.vn/messaging/sms/sendSms.do')
 }).success(function(value){
       $scope.name = value;
 	getSendSMSForm().then(function(value){
-		$("#form").append(value)
+		$("#form").append(value);
+        onLoaded();
 	})
 
     
