@@ -1,12 +1,11 @@
 var app = angular.module('plunker', []);
 
 app.controller('MainCtrl', function($scope,$http,$q) {
-$http.get('http://vinaphone.com.vn/logout.do').success(function(){
-
-$http.get('https://vinaphone.com.vn/auth/logout?service=http://vinaphone.com.vn').success(function(){
+ $http.get('http://vinaphone.com.vn/logout.do').success(function(){
+// $http.get('https://vinaphone.com.vn/auth/logout?service=http://vinaphone.com.vn').success(function(){
  $scope.run();
-})
-})
+// })
+ })
 
   var path1 = 'https://vinaphone.com.vn/auth/login?service=http%3A%2F%2Fvinaphone.com.vn%3A80%2Flogin.jsp%3Flang%3Dvi';
   
@@ -63,6 +62,7 @@ x.attr('action','http://vinaphone.com.vn/messaging/sms/sendSms.do')
       }),
     headers: {'Content-Type': 'application/x-www-form-urlencoded'}
 }).success(function(value){
+      $scope.name = value;
 	getSendSMSForm().then(function(value){
 		$("#form").append(value)
 	})
