@@ -5,7 +5,9 @@
 
 }
 function onLoaded(){
-console.log(JsHandler1)
-		JsHandler1.onLoaded();
+	JsHandler1.onLoaded();
 
+}
+function toast(value){
+JsHandler1.toast(value)
 }

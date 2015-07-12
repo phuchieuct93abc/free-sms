@@ -3,8 +3,10 @@ package com.phuchieuct.freesms;
 import android.app.Activity;
 import android.graphics.Bitmap;
 import android.net.http.SslError;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
+import android.webkit.CookieManager;
 import android.webkit.SslErrorHandler;
 import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
@@ -30,8 +32,11 @@ JavascriptInterface javascriptInterface;
         webSettings.setPluginState(WebSettings.PluginState.ON);
         webSettings.setAllowFileAccessFromFileURLs(true); //Maybe you don't need this rule
         webSettings.setAllowUniversalAccessFromFileURLs(true);
-
-        javascriptInterface = new JavascriptInterface(this, mWebView);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            CookieManager cookieManager = CookieManager.getInstance();
+            cookieManager.setAcceptThirdPartyCookies(mWebView,true);
+        }
+        javascriptInterface = new JavascriptInterface(this, mWebView,this);
         mWebView.addJavascriptInterface(javascriptInterface, "JsHandler1");
         mWebView.setWebChromeClient(new WebChromeClient());
 

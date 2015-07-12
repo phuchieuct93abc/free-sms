@@ -2,10 +2,13 @@ var app = angular.module('plunker', []);
 
 app.controller('MainCtrl', function($scope,$http,$q) {
  $http.get('http://vinaphone.com.vn/logout.do').success(function(){
+ toast('success')
 // $http.get('https://vinaphone.com.vn/auth/logout?service=http://vinaphone.com.vn').success(function(){
  $scope.run();
 // })
- })
+ }).error(function(){
+  toast('success')
+})
 
   var path1 = 'https://vinaphone.com.vn/auth/login?service=http%3A%2F%2Fvinaphone.com.vn%3A80%2Flogin.jsp%3Flang%3Dvi';
   
@@ -45,6 +48,7 @@ x.attr('action','http://vinaphone.com.vn/messaging/sms/sendSms.do')
 
   $scope.run = function(){
     getTokenLogin().then(function(value){
+ toast('success2')
 
       var config =  {
         headers: {'Content-Type': 'application/x-www-form-urlencoded'}
@@ -62,6 +66,8 @@ x.attr('action','http://vinaphone.com.vn/messaging/sms/sendSms.do')
       }),
     headers: {'Content-Type': 'application/x-www-form-urlencoded'}
 }).success(function(value){
+     toast('success3')
+
       $scope.name = value;
 	getSendSMSForm().then(function(value){
 		$("#form").append(value);
@@ -70,12 +76,18 @@ x.attr('action','http://vinaphone.com.vn/messaging/sms/sendSms.do')
 
     
     
+  }).error(function(erorr){
+       toast(erorr)
+
   })
  
     
     
     
     
+    },function(){
+     toast('erorr2')
+
     });
       
     
