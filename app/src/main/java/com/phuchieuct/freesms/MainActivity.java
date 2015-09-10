@@ -1,10 +1,15 @@
 package com.phuchieuct.freesms;
 
 import android.app.Activity;
+import android.content.Intent;
+import android.database.Cursor;
 import android.graphics.Bitmap;
+import android.net.Uri;
 import android.net.http.SslError;
 import android.os.Build;
 import android.os.Bundle;
+import android.provider.Contacts;
+import android.provider.ContactsContract;
 import android.view.View;
 import android.webkit.CookieManager;
 import android.webkit.SslErrorHandler;
@@ -15,13 +20,26 @@ import android.webkit.WebViewClient;
 
 
 public class MainActivity extends Activity {
-JavascriptInterface javascriptInterface;
+    JavascriptInterface javascriptInterface;
+    final int PICK_CONTACT = 123;
+    WebView mWebView;
+    String phoneNumber = null;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        WebView mWebView;
+        initWebview();
+
+//        openContact();
+//
+    }
+    public void openContact(View v){
+        openContact();
+    }
+
+    private void initWebview() {
         mWebView = (WebView) findViewById(R.id.webView);
 
         WebSettings webSettings = mWebView.getSettings();
@@ -34,9 +52,9 @@ JavascriptInterface javascriptInterface;
         webSettings.setAllowUniversalAccessFromFileURLs(true);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             CookieManager cookieManager = CookieManager.getInstance();
-            cookieManager.setAcceptThirdPartyCookies(mWebView,true);
+            cookieManager.setAcceptThirdPartyCookies(mWebView, true);
         }
-        javascriptInterface = new JavascriptInterface(this, mWebView,this);
+        javascriptInterface = new JavascriptInterface(this, mWebView, this);
         mWebView.addJavascriptInterface(javascriptInterface, "JsHandler1");
         mWebView.setWebChromeClient(new WebChromeClient());
 
@@ -49,12 +67,17 @@ JavascriptInterface javascriptInterface;
                 //Toast.makeText(TableContentsWithDisplay.this, "url "+url, Toast.LENGTH_SHORT).show();
 
             }
+
             @Override
             public void onPageFinished(WebView view, String url) {
-                javascriptInterface.javaFnCall("01234959839");
+                if(phoneNumber==null){
+                    javascriptInterface.javaFnCall("01234959839");
 
+                }else{
+                    javascriptInterface.javaFnCall(phoneNumber);
+
+                }
                 super.onPageFinished(view, url);
-                //Toast.makeText(TableContentsWithDisplay.this, "Width " + view.getWidth() +" *** " + "Height " + view.getHeight(), Toast.LENGTH_SHORT).show();
             }
 
             @Override
@@ -70,7 +93,34 @@ JavascriptInterface javascriptInterface;
         webSettings.setCacheMode(WebSettings.LOAD_NO_CACHE);
         mWebView.requestFocus(View.FOCUS_DOWN);
         mWebView.loadUrl("file:///android_asset/index.html");
+    }
+
+    void openContact() {
+        Intent intent = new Intent(Intent.ACTION_PICK, ContactsContract.CommonDataKinds.Phone.CONTENT_URI);
+        startActivityForResult(intent, PICK_CONTACT);
 
     }
+
+    @Override
+    public void onActivityResult(int reqCode, int resultCode, Intent data) {
+        super.onActivityResult(reqCode, resultCode, data);
+
+        switch (reqCode) {
+            case (PICK_CONTACT):
+                if (resultCode == Activity.RESULT_OK) {
+                    Uri uri = data.getData();
+                    Cursor cursor = getContentResolver().query(uri, null, null, null, null);
+                    cursor.moveToFirst();
+
+                    int phoneIndex = cursor.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER);
+                    phoneNumber = cursor.getString(phoneIndex);
+                    javascriptInterface.javaFnCall(phoneNumber);
+
+
+                }
+                break;
+        }
+    }
+
 
 }
