@@ -1,21 +1,27 @@
 <!DOCTYPE html>
 <html ng-app="plunker">
 
-<head>
-   <!--<script type="text/javascript" src="https://getfirebug.com/firebug-lite-debug.js"></script>  <meta charset="utf-8" />-->
-    <title>AngularJS Plunker</title>
+    <head>
+        <!--<script type="text/javascript" src="https://getfirebug.com/firebug-lite-debug.js"></script>  <meta charset="utf-8" />-->
+        <title>AngularJS Plunker</title>
 
-    <link rel="stylesheet" href="style.css"/>
-    <script src="jquery-2.1.4.min.js"></script>
-    <script src="angular.js"></script>
-    <script src="java.js"></script>
+        <link rel="stylesheet" href="style.css"/>
+        <script src="jquery-2.1.4.min.js"></script>
+        <script src="angular.js"></script>
+        <script src="java.js"></script>
 
-    <script src="app.js"></script>
+        <script src="services.js"></script>
+        <script src="app_1.js"></script>
 
-</head>
+    </head>
 
-<body ng-controller="MainCtrl">
-<div id='form'></div>
-</body>
+    <body ng-controller="MainCtrl">
+        To<input id="phone" ng-model="to"/></br>
+        Message<input  ng-model="message"/></br>
+
+        Code <input ng-model="code"/>
+        <button ng-click="submit()">Submit</button>
+        <div id='form'></div>
+    </body>
 
 </html>
