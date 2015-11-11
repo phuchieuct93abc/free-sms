@@ -30,7 +30,6 @@ public class JavascriptInterface {
 
     @android.webkit.JavascriptInterface
     public void toast(String toast) {
-        Log.e("hieu",toast);
         Toast.makeText(context,toast,Toast.LENGTH_SHORT).show();
 
     }

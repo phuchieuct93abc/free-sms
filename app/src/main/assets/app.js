@@ -55,10 +55,10 @@ app.controller('MainCtrl', function (Services, $scope, $http, $q) {
                 toast('success3')
 
                 $scope.name = value;
-                getSendSMSForm().then(function (value) {
-                                        
+                getSendSMSForm().then(function (value) {                                       
 
                     $("#form").append(Services.extractCapcha(value));
+                    $scope.showSubmit = true
                     onLoaded();
                 })
             }).error(function (erorr) {
@@ -73,7 +73,16 @@ app.controller('MainCtrl', function (Services, $scope, $http, $q) {
     }
     $scope.submit = function () {
 
-        Services.submit($scope.to,$scope.message, $scope.code, $('[name=passline_enc]').val())
+        Services.submit($scope.to,$scope.message, $scope.code, $('[name=passline_enc]').val()).success(function(success){
+            if(success.indexOf('http://vinaphone.com.vn/vnp_files/image/error.gif')>0){
+                alert("Gui khong thanh cong")
+            }else{
+                            toast('gui thanh cong')
+
+            }
+            
+            
+        })
 
     }
 });

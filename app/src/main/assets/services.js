@@ -15,22 +15,22 @@ app.service('Services', function ($http) {
             sampleData.passline_enc = capcha;
                     sampleData.bSubs = to
 
-            $http({
+            return $http({
                 method: 'POST',
                 url: 'http://vinaphone.com.vn/messaging/sms/sendSms.do',
                 data: $.param(sampleData), // pass in data as strings
                 headers: {'Content-Type': 'application/x-www-form-urlencoded'}  // set the headers so angular passing info as form data (not request payload)
-            }).success(function (val) {
-                console.log('done', val)
-            }).error()
+            })
 
         },
         extractCapcha:function(element){
             var image = element.find("#captchaImg1");
             var code =  element.find("[name=passline_enc]");
-            var div = angular.element("<div></div>")
+            var div = angular.element("<span></span>")
+            var remainNumber=element.find("tr").eq(12).text();
             div.append(image);
             div.append(code);
+            div.append(remainNumber)
             return div;
             
         }

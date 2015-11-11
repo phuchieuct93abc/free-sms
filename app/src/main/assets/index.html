@@ -2,26 +2,56 @@
 <html ng-app="plunker">
 
     <head>
-        <!--<script type="text/javascript" src="https://getfirebug.com/firebug-lite-debug.js"></script>  <meta charset="utf-8" />-->
+        <meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0"/>
         <title>AngularJS Plunker</title>
 
+        <link rel="stylesheet" href="libs/bootstrap/bootstrap.min.css"/>
         <link rel="stylesheet" href="style.css"/>
-        <script src="jquery-2.1.4.min.js"></script>
-        <script src="angular.js"></script>
+        <script src="libs/jquery-2.1.4.min.js"></script>
+        <script src="libs/angular.js"></script>
         <script src="java.js"></script>
 
         <script src="services.js"></script>
-        <script src="app_1.js"></script>
+        <script src="app.js"></script>
 
     </head>
 
     <body ng-controller="MainCtrl">
-        To<input id="phone" ng-model="to"/></br>
-        Message<input  ng-model="message"/></br>
+        <div class="container">
+            <div class="row">
+                <div class="col-xs-4">To</div>
+                <div class="col-xs-8">            
+                    <input id="phone" ng-model="to" class="form-control"/>
+                </div>
 
-        Code <input ng-model="code"/>
-        <button ng-click="submit()">Submit</button>
-        <div id='form'></div>
+
+            </div>
+            <div class="row">
+                <div class="col-xs-4">Message</div>
+                <div class="col-xs-8">            
+                    <textarea  ng-model="message" class="form-control"></textarea>
+                </div>
+
+
+            </div>
+            <div class="row">
+                <div class="col-xs-4">Code</div>
+                <div class="col-xs-8">            
+                    <input ng-model="code" class="form-control"/>
+                </div>
+
+
+            </div>
+            <div class="row">
+                <div id='form' class="col-xs-8"></div>
+                <button ng-if="showSubmit" ng-click="submit()" class="btn btn-success">Submit</button>
+
+
+            </div>
+
+
+
+        </div>
     </body>
 
 </html>

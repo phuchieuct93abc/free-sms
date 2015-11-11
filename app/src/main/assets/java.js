@@ -9,9 +9,9 @@ function setToNumber(number) {
 
 }
 function onLoaded() {
-    //JsHandler1.onLoaded();
+    JsHandler1.onLoaded();
 
 }
 function toast(value) {
-    //JsHandler1.toast(value)
+    JsHandler1.toast(value)
 }

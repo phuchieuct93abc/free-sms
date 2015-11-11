@@ -5,23 +5,8 @@
 }
 #captchaImg1{
 display: inline-block;
-  width:150px;
+  width:180px;
 }
-[name=smsForm] table tr:nth-child(4) {
-    display:none;
-}
-[name=smsForm] table tr:nth-child(6) {
-    display:none;
-}
-[name=smsForm] table tr:nth-child(8) {
-    display:none;
-}
-[name=smsForm] table tr:nth-child(9) table {
-  margin-left: -150px;
-}
-[name=smsForm] table tr:nth-child(9) tr:nth-child(1) {
-    display:none;
-}
-[name=smsForm] table tr:nth-child(9) tr:nth-child(2) {
-    display:none;
+.row{
+    margin-bottom: 5px;
 }
