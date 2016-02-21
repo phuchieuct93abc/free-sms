@@ -81,12 +81,12 @@ app.controller('MainCtrl', function (Services, $scope, $http, $q) {
 			if (success.indexOf('http://vinaphone.com.vn/vnp_files/image/error.gif') > 0) {
 				alert("Gui khong thanh cong");
 
-				Services.addHistory($scope.message, $scope.to, true)
+				Services.addHistory($scope.message, $scope.to, false)
 			} else {
 
 				alert('gui thanh cong');
 
-				Services.addHistory($scope.message, $scope.to, false)
+				Services.addHistory($scope.message, $scope.to, true)
 
 			}
 

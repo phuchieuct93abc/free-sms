@@ -1,3 +1,9 @@
+$(document).ready(function () {
+		globalScope = $("body").scope();
+
+
+	});
+
 function setToNumber(number) {
 
 	$(document).ready(function () {
@@ -29,9 +35,17 @@ function toast(value) {
 
 }
 function addHistoryFn(value) {
+console.log(JSON.stringify(value))
 	callJava(function () {
+
 		JsHandler1.addHistory(JSON.stringify(value))
 
 	})
 
+}
+function sendHistory(history){
+
+	console.log(JSON.parse(history).messages)
+
+	
 }

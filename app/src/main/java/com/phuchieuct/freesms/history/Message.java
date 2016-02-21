@@ -1,4 +1,4 @@
-package com.phuchieuct.freesms;
+package com.phuchieuct.freesms.history;
 
 public class Message {
     private String date;

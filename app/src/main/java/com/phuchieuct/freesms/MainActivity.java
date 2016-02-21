@@ -1,14 +1,15 @@
 package com.phuchieuct.freesms;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.net.http.SslError;
 import android.os.Build;
 import android.os.Bundle;
-import android.provider.Contacts;
 import android.provider.ContactsContract;
 import android.view.View;
 import android.webkit.CookieManager;
@@ -17,6 +18,14 @@ import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
+import android.widget.ListView;
+
+import com.google.gson.Gson;
+import com.phuchieuct.freesms.history.History;
+import com.phuchieuct.freesms.history.HistoryAdapter;
+import com.phuchieuct.freesms.history.Message;
+
+import java.util.ArrayList;
 
 
 public class MainActivity extends Activity {
@@ -24,18 +33,37 @@ public class MainActivity extends Activity {
     final int PICK_CONTACT = 123;
     WebView mWebView;
     String phoneNumber = null;
+    SharedPreferences sharedPref;
+    History history;
+    Gson gson = new Gson();
+    ListView listView;
+    HistoryAdapter historyAdapter;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        listView = (ListView)findViewById(R.id.listView);
+        sharedPref = getApplicationContext().getSharedPreferences("NEWS_PREFERENCE", Context.MODE_PRIVATE);
         initWebview();
+        getHistory();
+        historyAdapter =new HistoryAdapter(getApplicationContext(), R.layout.list_history, history.getMessages());
+        listView.setAdapter(historyAdapter);
 
-//        openContact();
-//
     }
-    public void openContact(View v){
+    private void getHistory(){
+        Gson gson = new Gson();
+        history = gson.fromJson(  sharedPref.getString("HISTORY",null), History.class);
+        if(history==null){
+            history=new History();
+            history.setMessages(new ArrayList<Message>());
+        }
+
+
+    }
+
+    public void openContact(View v) {
         openContact();
     }
 
@@ -70,10 +98,10 @@ public class MainActivity extends Activity {
 
             @Override
             public void onPageFinished(WebView view, String url) {
-                if(phoneNumber==null){
+                if (phoneNumber == null) {
                     javascriptInterface.javaFnCall("01234959839");
 
-                }else{
+                } else {
                     javascriptInterface.javaFnCall(phoneNumber);
 
                 }
@@ -120,6 +148,23 @@ public class MainActivity extends Activity {
                 }
                 break;
         }
+    }
+
+
+    public void addHistory(final String message) {
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+
+                Message obj = gson.fromJson(message, Message.class);
+                history.getMessages().add(0, obj);
+                historyAdapter.setHistory(history.getMessages());
+                historyAdapter.notifyDataSetChanged();
+                sharedPref.edit().putString("HISTORY", gson.toJson(history)).apply();
+
+
+            }
+        });
     }
 
 

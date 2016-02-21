@@ -2,7 +2,6 @@ package com.phuchieuct.freesms;
 
 import android.app.Activity;
 import android.content.Context;
-import android.util.Log;
 import android.webkit.WebView;
 import android.widget.Toast;
 
@@ -33,6 +32,13 @@ public class JavascriptInterface {
         Toast.makeText(context,toast,Toast.LENGTH_SHORT).show();
 
     }
+    @android.webkit.JavascriptInterface
+    public void addHistory(String message){
+        ( (MainActivity)activity).addHistory(message);
+    }
+
+
+
 
     public void javaFnCall(String jsString) {
 
