@@ -2,7 +2,7 @@
 <html ng-app="plunker">
 
     <head>
-        <meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0"/>
+        <meta x="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0"/>
         <title>AngularJS Plunker</title>
 
         <link rel="stylesheet" href="libs/bootstrap/bootstrap.min.css"/>
@@ -36,15 +36,21 @@
             </div>
             <div class="row">
                 <div class="col-xs-4">Code</div>
-                <div class="col-xs-8">            
-                    <input ng-model="code" class="form-control"/>
+                <div class="col-xs-8">
+                    <div class="row">
+                        <div class="col-xs-7">
+                            <input ng-model="code" class="form-control col-xs-6"/>
+
+                        </div>
+                        <button  ng-if="showSubmit" ng-click="submit()" class="btn btn-success col-xs-5">Submit</button>
+
+                    </div>
                 </div>
 
 
             </div>
             <div class="row">
-                <div id='form' class="col-xs-8"></div>
-                <button ng-if="showSubmit" ng-click="submit()" class="btn btn-success">Submit</button>
+                <div id='form' class="col-xs-12"></div>
 
 
             </div>

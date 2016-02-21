@@ -1,17 +1,37 @@
 function setToNumber(number) {
 
-    $(document).ready(function () {
-        var scope = $("body").scope();
-        scope.to = number
-        scope.$evalAsync()
+	$(document).ready(function () {
+		var scope = $("body").scope();
+		scope.to = number
+			scope.$evalAsync()
 
-    });
+	});
+
+}
+function callJava(callback) {
+	try {
+		callback();
+	} catch (e) {
+		console.log("Dont run on native")
+	}
 
 }
 function onLoaded() {
-    JsHandler1.onLoaded();
+	callJava(function () {
+		JsHandler1.onLoaded();
+	})
 
 }
 function toast(value) {
-    JsHandler1.toast(value)
+	callJava(function () {
+		JsHandler1.toast(value)
+	})
+
+}
+function addHistoryFn(value) {
+	callJava(function () {
+		JsHandler1.addHistory(JSON.stringify(value))
+
+	})
+
 }
