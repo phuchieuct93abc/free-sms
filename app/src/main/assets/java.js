@@ -8,6 +8,7 @@ function setToNumber(number) {
 
 	$(document).ready(function () {
 		var scope = $("body").scope();
+		number= number.split(' ').join('').trim()
 		scope.to = number
 			scope.$evalAsync()
 

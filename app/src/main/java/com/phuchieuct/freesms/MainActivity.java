@@ -18,6 +18,7 @@ import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
+import android.widget.AdapterView;
 import android.widget.ListView;
 
 import com.google.gson.Gson;
@@ -50,6 +51,15 @@ public class MainActivity extends Activity {
         getHistory();
         historyAdapter =new HistoryAdapter(getApplicationContext(), R.layout.list_history, history.getMessages());
         listView.setAdapter(historyAdapter);
+       listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+           @Override
+           public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+               Message message = (Message) parent.getItemAtPosition(position);
+               javascriptInterface.javaFnCall(message.getReceiver());
+
+
+        }
+       });
 
     }
     private void getHistory(){
@@ -166,6 +176,23 @@ public class MainActivity extends Activity {
             }
         });
     }
+    public void clearHistory(View v){
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+
+                history.getMessages().clear();
+                historyAdapter.setHistory(history.getMessages());
+                historyAdapter.notifyDataSetChanged();
+                sharedPref.edit().putString("HISTORY", gson.toJson(history)).apply();
+
+
+            }
+        });
+
+    }
+
+
 
 
 }
